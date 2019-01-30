@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {Route, Link} from 'react-router-dom';
 import './App.css';
 import Landing from './components/Landing';
-import Library from './components/Library'
+import Library from './components/Library';
+import Album from './components/Album'
 
 
 class App extends Component {
@@ -10,7 +11,9 @@ class App extends Component {
     return (
       <div className="App">
         <nav>
-            <Link to='/'>Landing</Link>&nbsp;<Link to='/Library'>Library</Link>
+            <Link to='/'>Landing </Link>
+            <Link to='/Library'>Library </Link>
+            <Link to='/Album'>Album </Link>
           </nav>
         <header>
           <h1>Bloc Jams</h1>
@@ -18,6 +21,7 @@ class App extends Component {
         <main>
           <Route exact path='/' component={Landing} /> {/*default*/}
           <Route path='/library' component={Library} />
+          <Route path='/album' component={Album} />
         </main>
       </div>
     );
