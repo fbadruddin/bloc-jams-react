@@ -22,6 +22,7 @@ class App extends Component {
           <Route exact path='/' component={Landing} /> {/*default*/}
           <Route path='/library' component={Library} />
           <Route path='/album' component={Album} />
+          <Route path="/album/:slug" component={Album} />
         </main>
       </div>
     );
