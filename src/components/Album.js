@@ -23,11 +23,9 @@ class Album extends Component {
     play(key) {
         this.audioElement.play();
         this.setState({isPlaying:true});
-        let span = document.getElementById(key);
-        span.innerHTML = '<ion-icon name="pause"></ion-icon>';
         this.setState({currentSpan:key});
     } 
-    pause(key) {
+    pause() {
         this.audioElement.pause();
         this.setState({isPlaying:false});
     }
@@ -39,30 +37,38 @@ class Album extends Component {
     handleSongClick(song,key) {
         let isSameSong = this.state.currentSong === song;
         if(isSameSong && this.state.isPlaying) {
-            this.pause(key);
+            this.pause();
         }
         else {
             if (!isSameSong) {
                 this.reset(this.state.currentSpan);
                  this.setSong(song,key); 
                 }
-            this.play(key); 
+            this.play(key);
         }
     }
     enter(key) {
         let span = document.getElementById(key);
-        if(span.innerHTML.indexOf('pause') === -1)
+        if(key === this.state.currentSpan)
+        {
+            if(this.state.isPlaying === true)
+            {
+                span.innerHTML = '<ion-icon name="pause"></ion-icon>';
+            }
+            else
+            {
+                span.innerHTML = '<ion-icon name="play"></ion-icon>';
+            }
+        }
+        else
         {
             span.innerHTML = '<ion-icon name="play"></ion-icon>';
         }
     } 
     leave(key) {
         let span = document.getElementById(key);
-        if(span.innerHTML.indexOf('pause') === -1)
-        {
-            let id = span.id.split('_')[1]
-            span.innerHTML = id;
-        }
+        let id = span.id.split('_')[1]
+        span.innerHTML = id;
     }
     reset(key) {
         let span = document.getElementById(key)
