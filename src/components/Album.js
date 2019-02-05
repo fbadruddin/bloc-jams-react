@@ -13,36 +13,62 @@ class Album extends Component {
           this.state = {
             album: album,
             currentSong: album.songs[0],
-            isPlaying: false
+            isPlaying: false,
+            currentSpan: 'span_1'
           };
 
           this.audioElement = document.createElement('audio');
           this.audioElement.src = album.songs[0].audioSrc;
       }
-      play() {
+    play(key) {
         this.audioElement.play();
         this.setState({isPlaying:true});
+        let span = document.getElementById(key);
+        span.innerHTML = '<ion-icon name="pause"></ion-icon>';
+        this.setState({currentSpan:key});
     } 
-    pause() {
+    pause(key) {
         this.audioElement.pause();
         this.setState({isPlaying:false});
     }
-    setSong(song){
+    setSong(song,key){
         this.setState({currentSong:song});
         this.audioElement.src = song.audioSrc;
+        this.setState({currentSpan:key});
     }
-    handleSongClick(song) {
+    handleSongClick(song,key) {
         let isSameSong = this.state.currentSong === song;
         if(isSameSong && this.state.isPlaying) {
-            this.pause();
+            this.pause(key);
         }
         else {
-            if (!isSameSong) { this.setSong(song); }
-            this.play();
+            if (!isSameSong) {
+                this.reset(this.state.currentSpan);
+                 this.setSong(song,key); 
+                }
+            this.play(key); 
         }
-        console.log('Is playing ' + this.state.isPlaying);
+    }
+    enter(key) {
+        let span = document.getElementById(key);
+        if(span.innerHTML.indexOf('pause') === -1)
+        {
+            span.innerHTML = '<ion-icon name="play"></ion-icon>';
+        }
     } 
-
+    leave(key) {
+        let span = document.getElementById(key);
+        if(span.innerHTML.indexOf('pause') === -1)
+        {
+            let id = span.id.split('_')[1]
+            span.innerHTML = id;
+        }
+    }
+    reset(key) {
+        let span = document.getElementById(key)
+        let id = span.id.split('_')[1];
+        span.innerHTML = id;
+    }
     render() {
         return (
             <section className='Album'>
@@ -68,10 +94,16 @@ class Album extends Component {
                         </tr>
                         {
                             this.state.album.songs.map( (song, index) =>
-                                <tr className='song' key={index} onClick={() => this.handleSongClick(song)}>
-                                    <td>{index + 1}</td>
-                                    <td>{song.title}</td>
-                                    <td>{song.duration} seconds</td>
+                                <tr className='song' 
+                                    key={index + 1} 
+                                    onClick={() => this.handleSongClick(song,`span_${index + 1}`)} 
+                                    onMouseEnter={() => this.enter(`span_${index + 1}`)} 
+                                    onMouseLeave={() => this.leave(`span_${index + 1}`)}>
+                                    <td>
+                                        <span id={`span_${index + 1}`}>{index + 1}</span>
+                                    </td>
+                                    <td key='title'>{song.title}</td>
+                                    <td key='duration'>{song.duration} seconds</td>
                                 </tr>
                             )
                         }
