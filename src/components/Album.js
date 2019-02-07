@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import albumData from './../data/albums';
+import PlayerBar from './PlayerBar';
 
 
 class Album extends Component {
@@ -13,52 +14,57 @@ class Album extends Component {
           this.state = {
             album: album,
             currentSong: album.songs[0],
-            isPlaying: false,
-            currentSpan: 'span_1'
+            isPlaying: false
           };
 
           this.audioElement = document.createElement('audio');
           this.audioElement.src = album.songs[0].audioSrc;
       }
-    play(key) {
+    play() {
         this.audioElement.play();
         this.setState({isPlaying:true});
-        this.setState({currentSpan:key});
     } 
     pause() {
         this.audioElement.pause();
         this.setState({isPlaying:false});
     }
-    setSong(song,key){
+    setSong(song){
         this.setState({currentSong:song});
         this.audioElement.src = song.audioSrc;
-        this.setState({currentSpan:key});
     }
-    handleSongClick(song,key) {
+    handleSongClick(song) {
         let isSameSong = this.state.currentSong === song;
         if(isSameSong && this.state.isPlaying) {
             this.pause();
         }
         else {
             if (!isSameSong) {
-                this.reset(this.state.currentSpan);
-                 this.setSong(song,key); 
+                 this.setSong(song); 
                 }
-            this.play(key);
+            this.play();
         }
+    }
+    handlePrevious() {
+        const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+        const newIndex = Math.max(0, currentIndex - 1);
+        const newSong = this.state.album.songs[newIndex];
+        this.setSong(newSong);
+        this.play();
+    }
+    handleNext() {
+        const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+        const newIndex = Math.min(currentIndex + 1, this.state.album.songs.length - 1);
+        const newSong = this.state.album.songs[newIndex];
+        this.setSong(newSong);
+        this.play();
     }
     enter(key) {
         let span = document.getElementById(key);
-        if(key === this.state.currentSpan)
+        const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+        let id = span.id.split('_')[1];
+        if(this.state.isPlaying === true && ((currentIndex + 1) == id))
         {
-            if(this.state.isPlaying === true)
-            {
-                span.innerHTML = '<ion-icon name="pause"></ion-icon>';
-            }
-            else
-            {
-                span.innerHTML = '<ion-icon name="play"></ion-icon>';
-            }
+            span.innerHTML = '<ion-icon name="pause"></ion-icon>';
         }
         else
         {
@@ -115,6 +121,13 @@ class Album extends Component {
                         }
                     </tbody>
                 </table>
+                <PlayerBar
+                    isPlaying={this.state.isPlaying}
+                    currentSong={this.state.currentSong}
+                    handleSongClick={() => this.handleSongClick(this.state.currentSong)}
+                    handlePrevious = {() => this.handlePrevious()}
+                    handleNext = {() => this.handleNext()}
+                />
             </section>
         );
     }
