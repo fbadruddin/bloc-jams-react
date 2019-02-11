@@ -1,6 +1,18 @@
 import React, {Component} from 'react';
 
 class PlayerBar extends React.Component {
+    formatMinutesToSeconds(time) {
+        let first = time.replace(':','.').split('.');
+        if(first[0] !== '0')
+        {
+            return parseInt(first[0] * 60) + parseInt(first[1]);
+        }
+        else
+        {
+            return parseInt(first[1]);
+        }
+    }
+
     render() {
         return (
             <section name ='player-bar'>
@@ -23,10 +35,10 @@ class PlayerBar extends React.Component {
                     <input 
                         type="range" 
                         className="seek-bar" 
-                        value={(this.props.currentTime / this.props.duration) || 0} 
-                        max="1" 
+                        value={(this.formatMinutesToSeconds(this.props.currentTime) || 0)} 
+                        max={this.props.duration} 
                         min="0" 
-                        step="0.01" 
+                        step="0.01"
                         onChange={this.props.handleTimeChange}
                     />   
                     <div className="total-time">{this.props.duration}</div> 

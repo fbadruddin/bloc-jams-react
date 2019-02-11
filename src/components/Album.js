@@ -93,9 +93,10 @@ class Album extends Component {
     }
     
     handleTimeChange(e) {
-        const newTime = this.audioElement.duration * e.target.value;
+        const newTime = this.audioElement.duration * (e.target.value/100);
         this.audioElement.currentTime = newTime;
         this.setState({currentTime: newTime});
+        console.log(this.state.currentTime);
     }
 
     handleVolumeChange(e) {
@@ -128,6 +129,19 @@ class Album extends Component {
         let span = document.getElementById(key)
         let id = span.id.split('_')[1];
         span.innerHTML = id;
+    }
+
+    formatTime(seconds) {
+        if(isNaN(seconds)) return '-:--';
+        if(seconds <= 60 ) return '0:' + Math.round(seconds,0);
+        let minutes = Math.floor(seconds/60);
+        if(minutes <= 0) return 0 + ':' + seconds;
+        let remainder = Math.round(Math.floor(seconds - minutes * 60),0);
+        if(remainder < 10)
+        {
+            remainder = '0' + remainder;
+        }
+        return minutes + ':' + remainder;
     }
     
     render() {
@@ -164,7 +178,7 @@ class Album extends Component {
                                         <span id={`span_${index + 1}`}>{index + 1}</span>
                                     </td>
                                     <td key='title'>{song.title}</td>
-                                    <td key='duration'>{song.duration} seconds</td>
+                                    <td key='duration'>{this.formatTime(song.duration)} seconds</td>
                                 </tr>
                             )
                         }
@@ -173,8 +187,8 @@ class Album extends Component {
                 <PlayerBar
                     isPlaying={this.state.isPlaying}
                     currentSong={this.state.currentSong}
-                    currentTime={this.audioElement.currentTime}
-                    duration={this.audioElement.duration}
+                    currentTime={this.formatTime(this.audioElement.currentTime)}
+                    duration={this.formatTime(this.audioElement.duration)}
                     currentVolume={this.audioElement.currentVolume}
                     volume={this.audioElement.volume}
                     handleSongClick={() => this.handleSongClick(this.state.currentSong)}
