@@ -30,3 +30,19 @@
     transform: rotate(360deg);
   }
 }
+.navbar-nav > li{
+  padding-left:30px;
+  padding-right:30px;
+}
+.card {
+  width: 25em;
+  margin:0 auto;
+  border:none;
+}
+.table {
+  border-radius: 5px;
+  width: 50%;
+  margin: 0px auto;
+  float: none;
+  border : solid
+}
