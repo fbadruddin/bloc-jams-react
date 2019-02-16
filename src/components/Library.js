@@ -10,20 +10,24 @@ class Library extends Component {
     render() {
         return (
             <div className='card'>
-            {
-                this.state.albums.map( (album, index) =>
-                    <Link to={`/album/${album.slug}`} key={index}>
-                        <div className="card-body mx-auto">
-                            <img className="rounded" src={album.albumCover} alt={album.title} height="400" width="400"/>   
-                            <div className="card text-dark bg-light">
-                                {album.title}
-                                <p>{album.artist}</p>
-                                <p>{album.songs.length} songs</p>
-                            </div>
-                        </div>
-                    </Link>
-                )
-            }
+                <div className="card-body">
+                    <div className="row">
+                {
+                    this.state.albums.map( (album, index) =>
+                        <Link to={`/album/${album.slug}`} key={index}>
+                                <div className="col">
+                                    <img className="rounded" src={album.albumCover} alt={album.title} height="200" width="200"  />   
+                                    <div className="card text-bg-light">
+                                        {album.title}
+                                        <p>{album.artist}</p>
+                                        <p>{album.songs.length} songs</p>
+                                    </div>
+                                </div>
+                        </Link>
+                    )
+                }
+                    </div>
+                </div>
             </div>
      );
    }

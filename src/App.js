@@ -12,11 +12,11 @@ class App extends Component {
       <div className="App">
         <nav className="navbar navbar-expand-sm bg-light navbar-light">
         <a className="navbar-brand" href="/">
-            Bloc Jams
+          <img src="./../assets/images/bloc_jams_logo.png" alt="Bloc Jams Landing" />
         </a>
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <Link className="nav-item" to='/'>Landing</Link>  
+                <Link className="nav-item" to='/'>Home</Link>  
               </li>
               <li className="nav-item">
                 <Link className="nav-item" to='/Library'>Library</Link>

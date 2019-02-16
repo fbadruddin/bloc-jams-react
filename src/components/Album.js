@@ -146,45 +146,46 @@ class Album extends Component {
     
     render() {
         return (
-            <section className='Album'>
-                <section id="album-info">
+            <div className="row mx-0">
+                <div className="col px-0">
                     <img className="rounded" id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title} />
+                </div>
+                <div className="col-sm-9 px-0">
                     <div className="album-details">
                         <h1 id="album-title">{this.state.album.title}</h1>
                         <h2 className="artist">{this.state.album.artist}</h2>
                         <div id="release-info">{this.state.album.releaseInfo}</div>
                     </div>
-                </section>
-                <div className="table-responsive">
-                    <table className="table table-hover" id="song-list" align='center'>
-                        <colgroup>
-                            <col id="song-number-column" />
-                            <col id="song-title-column" />
-                            <col id="song-duration-column" />
-                        </colgroup>  
-                        <tbody>
-                            <tr className="thead-dark">
-                                <th>Id</th>
-                                <th>Title</th>
-                                <th>Duration</th>
-                            </tr>
-                            {
-                                this.state.album.songs.map( (song, index) =>
-                                    <tr className='song' 
-                                        key={index + 1} 
-                                        onClick={() => this.handleSongClick(song,`span_${index + 1}`)} 
-                                        onMouseEnter={() => this.enter(`span_${index + 1}`)} 
-                                        onMouseLeave={() => this.leave(`span_${index + 1}`)}>
-                                        <td>
-                                            <span id={`span_${index + 1}`}>{index + 1}</span>
-                                        </td>
-                                        <td key='title'>{song.title}</td>
-                                        <td key='duration'>{this.formatTime(song.duration)} seconds</td>
-                                    </tr>
-                                )
-                            }
-                        </tbody>
-                    </table>
+                    <div className="table-responsive">
+                        <table className="table table-hover" id="song-list">
+                            <colgroup>
+                                <col id="song-number-column" />
+                                <col id="song-title-column" />
+                                <col id="song-duration-column" />
+                            </colgroup>  
+                            <tbody>
+                                <tr className="thead-dark">
+                                    <th>Id</th>
+                                    <th>Title</th>
+                                    <th>Duration</th>
+                                </tr>
+                                {
+                                    this.state.album.songs.map( (song, index) =>
+                                        <tr className='song' 
+                                            key={index + 1} 
+                                            onClick={() => this.handleSongClick(song,`span_${index + 1}`)} 
+                                            onMouseEnter={() => this.enter(`span_${index + 1}`)} 
+                                            onMouseLeave={() => this.leave(`span_${index + 1}`)}>
+                                            <td>
+                                                <span id={`span_${index + 1}`}>{index + 1}</span>
+                                            </td>
+                                            <td key='title'>{song.title}</td>
+                                            <td key='duration'>{this.formatTime(song.duration)} seconds</td>
+                                        </tr>
+                                    )
+                                }
+                            </tbody>
+                        </table>
                 </div>
                 <PlayerBar
                     isPlaying={this.state.isPlaying}
@@ -199,7 +200,8 @@ class Album extends Component {
                     handleTimeChange ={(e) => this.handleTimeChange(e)}
                     handleVolumeChange = {(e) => this.handleVolumeChange(e)}
                 />
-            </section>
+                </div>
+            </div>
         );
     }
 }

@@ -35,14 +35,31 @@
   padding-right:30px;
 }
 .card {
-  width: 25em;
   margin:0 auto;
   border:none;
 }
 .table {
-  border-radius: 5px;
   width: 50%;
   margin: 0px auto;
-  float: none;
-  border : solid
+  float: left;
+  border : none;
+}
+.col {
+  float: left;
+}
+.point-title {
+  font: bold
+}
+.card-header{
+  border:bottom;
+}
+.padding-0{
+  padding-right:0;
+  padding-left:0;
+}
+.album-details {
+  text-align: left;
+}
+.player-bar {
+  float:left;
 }

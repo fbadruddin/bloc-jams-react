@@ -15,7 +15,7 @@ class PlayerBar extends React.Component {
 
     render() {
         return (
-            <section name ='player-bar'>
+            <div className ='player-bar'>
                 <section id="buttons">
                     <button id="previous" onClick = {this.props.handlePrevious}>
                         <span><ion-icon name="skip-backward"></ion-icon></span>
@@ -56,7 +56,7 @@ class PlayerBar extends React.Component {
                     />   
                     <div className="total-volume">{this.props.volume}</div> 
                 </section>
-            </section>
+            </div>
         )
     }
 }
