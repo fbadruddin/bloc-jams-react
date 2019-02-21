@@ -1,11 +1,9 @@
 import React from 'react';
 
 const Landing = () => (
-    <div className="container">
-        <div className="card">
-            <div className="card-header">
-                    <h1>Turn the music up!</h1>
-            </div>
+    <div className="container-fluid">
+        <div><h1 className="hero-title">Turn the music up!</h1></div>
+        <div className="card background">
             <div className="card-body">
                 <div className="row">
                     <div className="col">

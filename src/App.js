@@ -11,20 +11,11 @@ class App extends Component {
     return (
       <div className="App">
         <nav className="navbar navbar-expand-sm bg-light navbar-light">
-        <a className="navbar-brand" href="/">
-          <img src="./../assets/images/bloc_jams_logo.png" alt="Bloc Jams Landing" />
-        </a>
-            <ul className="navbar-nav mx-auto">
-              <li className="nav-item">
-                <Link className="nav-item" to='/'>Home</Link>  
-              </li>
-              <li className="nav-item">
-                <Link className="nav-item" to='/Library'>Library</Link>
-              </li>
-            </ul>
+          <Link to='/'><img className="navbar-brand" src="./../assets/images/bloc_jams_logo.png" alt="Bloc Jams Landing" /></Link>
+          <Link className="nav-item library" to='/Library'>Library</Link>
         </nav>
         <main>
-          <Route exact path='/' component={Landing} /> {/*default*/}
+          <Route exact path='/' component={Landing} />
           <Route path='/library' component={Library} />
           <Route path="/album/:slug" component={Album} />
         </main>
